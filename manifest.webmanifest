@@ -1,0 +1,17 @@
+{
+  "name": "Recetario Veterinario",
+  "short_name": "Recetario",
+  "description": "Generador de recetas médico-veterinarias, offline y con datos locales.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f6b4f",
+  "theme_color": "#0f6b4f",
+  "lang": "es",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Recetario">
+<meta name="theme-color" content="#0f6b4f">
+<title>Recetario Veterinario</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20120%20120%27%3E%3Crect%20width%3D%27120%27%20height%3D%27120%27%20rx%3D%2726%27%20fill%3D%27%230f6b4f%27/%3E%3Cg%20fill%3D%27%23fff%27%3E%3Cpath%20d%3D%27M33%2041C18%2027%208%2032%2010%2046c2%2011%2013%2013%2024%208-7-4-7-9-1-13z%27/%3E%3Cpath%20d%3D%27M87%2041c15-14%2025-9%2023%205-2%2011-13%2013-24%208%207-4%207-9%201-13z%27/%3E%3Cpath%20d%3D%27M60%2032c-19%200-29%2013-28%2030%201%2018%2012%2034%2028%2038%2016-4%2027-20%2028-38%201-17-9-30-28-30z%27/%3E%3C/g%3E%3Ccircle%20cx%3D%2748%27%20cy%3D%2758%27%20r%3D%274%27%20fill%3D%27%230f6b4f%27/%3E%3Ccircle%20cx%3D%2772%27%20cy%3D%2758%27%20r%3D%274%27%20fill%3D%27%230f6b4f%27/%3E%3Cpath%20d%3D%27M60%2066c-13%200-19%208-17%2016%202%208%2010%2012%2017%2012s15-4%2017-12c2-8-4-16-17-16z%27%20fill%3D%27%230f6b4f%27/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20120%20120%27%3E%3Crect%20width%3D%27120%27%20height%3D%27120%27%20rx%3D%2726%27%20fill%3D%27%230f6b4f%27/%3E%3Cg%20fill%3D%27%23fff%27%3E%3Cpath%20d%3D%27M33%2041C18%2027%208%2032%2010%2046c2%2011%2013%2013%2024%208-7-4-7-9-1-13z%27/%3E%3Cpath%20d%3D%27M87%2041c15-14%2025-9%2023%205-2%2011-13%2013-24%208%207-4%207-9%201-13z%27/%3E%3Cpath%20d%3D%27M60%2032c-19%200-29%2013-28%2030%201%2018%2012%2034%2028%2038%2016-4%2027-20%2028-38%201-17-9-30-28-30z%27/%3E%3C/g%3E%3Ccircle%20cx%3D%2748%27%20cy%3D%2758%27%20r%3D%274%27%20fill%3D%27%230f6b4f%27/%3E%3Ccircle%20cx%3D%2772%27%20cy%3D%2758%27%20r%3D%274%27%20fill%3D%27%230f6b4f%27/%3E%3Cpath%20d%3D%27M60%2066c-13%200-19%208-17%2016%202%208%2010%2012%2017%2012s15-4%2017-12c2-8-4-16-17-16z%27%20fill%3D%27%230f6b4f%27/%3E%3C/svg%3E">
+<style>
+  :root{
+    --verde:#0f6b4f; --verde-claro:#e6f2ee; --verde-suave:#eaf5f0;
+    --bg:#f4f5f4; --card:#ffffff; --linea:#d9ddd9; --texto:#1c211e;
+    --muted:#63706a; --peligro:#b3261e; --sombra:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--texto);
+    -webkit-text-size-adjust:100%;
+    padding-bottom:calc(72px + env(safe-area-inset-bottom));
+  }
+  header{
+    position:sticky; top:0; z-index:20;
+    background:var(--verde); color:#fff;
+    padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+    display:flex; align-items:center; gap:10px;
+  }
+  header .logo{width:34px;height:34px;flex:0 0 34px;display:flex;align-items:center;justify-content:center}
+  header .logo img,header .logo svg{width:34px;height:34px;object-fit:contain;display:block}
+  header h1{font-size:16px; margin:0; font-weight:600; flex:1}
+  main{max-width:760px; margin:0 auto; padding:14px 12px 24px}
+  .tab{display:none}
+  .tab.activa{display:block}
+
+  nav{
+    position:fixed; left:0; right:0; bottom:0; z-index:20;
+    display:flex; background:var(--card); border-top:1px solid var(--linea);
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  nav button{
+    flex:1; border:0; background:none; padding:8px 2px 6px; cursor:pointer;
+    color:var(--muted); font-size:11px; display:flex; flex-direction:column; align-items:center; gap:3px;
+  }
+  nav button .ic{font-size:19px; line-height:1}
+  nav button.activa{color:var(--verde); font-weight:600}
+
+  .card{background:var(--card); border:1px solid var(--linea); border-radius:12px; padding:14px; margin:0 0 12px; box-shadow:var(--sombra)}
+  h2{font-size:17px; margin:2px 0 12px}
+  h3{font-size:14px; margin:16px 0 8px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em}
+  label{display:block; font-size:13px; color:var(--muted); margin:10px 0 4px}
+  input,select,textarea{
+    width:100%; font:inherit; padding:10px; border:1px solid var(--linea);
+    border-radius:9px; background:#fff; color:inherit; -webkit-appearance:none;
+  }
+  textarea{min-height:60px; resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--verde); outline-offset:-1px; border-color:var(--verde)}
+  .fila{display:flex; gap:10px}
+  .fila>*{flex:1}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    background:var(--verde); color:#fff; border:0; border-radius:9px;
+    padding:11px 16px; font:inherit; font-weight:600; cursor:pointer;
+  }
+  .btn.sec{background:#fff; color:var(--verde); border:1px solid var(--verde)}
+  .btn.gris{background:#eef0ee; color:var(--texto)}
+  .btn.peligro{background:#fff; color:var(--peligro); border:1px solid var(--peligro)}
+  .btn.chico{padding:7px 10px; font-size:13px}
+  .btn.full{width:100%}
+  .btn:disabled{opacity:.45; cursor:default}
+  .acciones{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+
+  .lista{list-style:none; margin:0; padding:0}
+  .lista li{
+    border:1px solid var(--linea); border-radius:10px; padding:10px 12px; margin-bottom:8px;
+    background:#fff; display:flex; gap:10px; align-items:flex-start;
+  }
+  .lista li .txt{flex:1; min-width:0}
+  .lista li .txt b{display:block}
+  .lista li .txt small{color:var(--muted)}
+  .pill{display:inline-block; font-size:11px; padding:2px 8px; border-radius:999px; background:var(--verde-suave); color:var(--verde); font-weight:600}
+  .vacio{color:var(--muted); text-align:center; padding:24px 8px; font-size:14px}
+  .buscador{position:relative}
+  .buscador input{padding-right:40px}
+  #buscarMedFlecha{
+    position:absolute; right:4px; top:4px; bottom:4px; width:34px;
+    border:0; background:none; color:var(--verde); font-size:15px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .sugerencias{
+    position:absolute; left:0; right:0; top:calc(100% + 4px); z-index:10;
+    background:#fff; border:1px solid var(--linea); border-radius:10px; box-shadow:var(--sombra);
+    max-height:280px; overflow:auto; overscroll-behavior:contain;
+  }
+  .sugerencias div{padding:10px 12px; border-bottom:1px solid var(--linea); cursor:pointer}
+  .sugerencias div:last-child{border-bottom:0}
+  .sugerencias div:hover,.sugerencias div.sel{background:var(--verde-suave)}
+  .sugerencias small{color:var(--muted); display:block}
+  .sugerencias .nores{color:var(--muted); cursor:default; text-align:center}
+
+  .item-receta{border:1px solid var(--linea); border-radius:10px; padding:12px; margin-bottom:10px; background:#fbfcfb}
+  .item-receta .cab{display:flex; justify-content:space-between; align-items:center; margin-bottom:6px}
+  .item-receta .cab b{font-size:15px}
+  .toggle{display:flex; border:1px solid var(--verde); border-radius:9px; overflow:hidden; margin:4px 0}
+  .toggle button{flex:1; border:0; background:#fff; color:var(--verde); padding:9px; font:inherit; font-weight:600; cursor:pointer}
+  .toggle button.on{background:var(--verde); color:#fff}
+  .aviso{background:#fff7e6; border:1px solid #f0d9a8; color:#7a5b12; padding:10px 12px; border-radius:9px; font-size:13px; margin:10px 0}
+  .ok{background:var(--verde-suave); border:1px solid #bfe0d1; color:var(--verde); padding:10px 12px; border-radius:9px; font-size:13px; margin:10px 0}
+
+  dialog{border:0; border-radius:14px; padding:0; width:min(520px,94vw); box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  dialog::backdrop{background:rgba(0,0,0,.4)}
+  .dlg-cuerpo{padding:16px}
+  .dlg-cuerpo h2{margin-top:0}
+
+  /* ====== IMPRESIÓN / RECETA (formato moderno) ====== */
+  #impresion{display:none}
+  @media print{
+    body{background:#fff; padding:0}
+    header,nav,main{display:none !important}
+    #impresion{display:block; padding:0}
+    @page{size:A4; margin:14mm 15mm}
+  }
+  .receta-print{
+    --tinta:#1f2421; --acento:#0f6b4f; --acento-suave:#eef5f1;
+    --linea:#e4e8e5; --gris:#8b938d;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--tinta); max-width:180mm; margin:0 auto; font-size:12px; line-height:1.5;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .rp-cab{text-align:center; padding-bottom:13px; border-bottom:2px solid var(--acento)}
+  .rp-cab .marca{width:74px; height:74px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center}
+  .rp-cab .marca img,.rp-cab .marca svg{max-width:74px; max-height:74px; width:100%; height:100%; object-fit:contain}
+  .rp-cab .ident .nom{font-size:16px; font-weight:700; letter-spacing:.02em; line-height:1.25}
+  .rp-cab .ident .rol{font-size:10.5px; color:var(--acento); font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-top:2px}
+  .rp-cab .ident .meta{font-size:10px; color:var(--gris); margin-top:5px; line-height:1.6}
+
+  .rp-head{display:flex; justify-content:space-between; align-items:flex-end; gap:16px; margin:16px 0 18px}
+  .rp-head .rx{display:flex; align-items:baseline; gap:10px}
+  .rp-head .rx .sym{font-family:Georgia,"Times New Roman",serif; font-size:30px; font-weight:700; color:var(--acento); line-height:.8}
+  .rp-head .rx h2{font-size:19px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; margin:0}
+  .rp-head .info{text-align:right; font-size:10px; color:var(--gris); line-height:1.55; white-space:nowrap}
+  .rp-head .info b{color:var(--tinta); font-size:11px; letter-spacing:.03em}
+
+  .rp-lab{font-size:9px; font-weight:700; letter-spacing:.17em; text-transform:uppercase; color:var(--acento); margin-bottom:5px}
+  .rp-prop{margin-bottom:6px}
+  .rp-prop .nom{font-size:13.5px; font-weight:700}
+  .rp-prop .sub{font-size:10.5px; color:var(--gris); margin-top:2px}
+
+  .rp-nota{margin:14px 0 18px; font-size:11px; line-height:1.6; white-space:pre-wrap; color:#3b423e;
+    border-left:2px solid var(--acento-suave); padding:3px 0 3px 12px; min-height:22px}
+  .rp-nota.vacia{border:0; padding:0; margin:10px 0}
+
+  .rp-card{border:1px solid var(--linea); border-left:3px solid var(--acento); border-radius:7px;
+    padding:12px 15px; margin-bottom:11px; page-break-inside:avoid}
+  .rp-card .tit{display:flex; justify-content:space-between; align-items:baseline; gap:12px}
+  .rp-card .tit .prod{font-size:14px; font-weight:700; line-height:1.3}
+  .rp-card .tit .prod .n{color:var(--gris); font-weight:700; margin-right:6px}
+  .rp-card .tit .esp{flex:0 0 auto; font-size:8.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+    color:var(--acento); background:var(--acento-suave); border-radius:20px; padding:3px 10px}
+  .rp-card .ind{font-size:12.5px; color:var(--tinta); margin-top:3px}
+  .rp-grid{display:grid; grid-template-columns:1fr 1fr; gap:9px 20px; margin-top:11px}
+  .rp-grid .k{font-size:8px; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--gris)}
+  .rp-grid .val{font-size:11.5px; margin-top:1px}
+  .rp-band{display:flex; margin-top:11px; border:1px solid #d7e5dd; border-radius:6px; overflow:hidden; background:var(--acento-suave)}
+  .rp-band>div{flex:1; padding:6px 12px}
+  .rp-band>div+div{border-left:1px solid #d7e5dd}
+  .rp-band .k{font-size:7.5px; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--acento)}
+  .rp-band .val{font-size:11px; font-weight:600; margin-top:1px}
+  .rp-card .obs{font-size:10px; color:#3b423e; margin-top:9px; padding-top:8px; border-top:1px dashed var(--linea)}
+  .rp-card .obs b{color:var(--gris); letter-spacing:.05em}
+
+  .rp-firma{margin-top:40px; text-align:center; page-break-inside:avoid}
+  .rp-firma .rubrica{display:block; width:200px; max-height:66px; object-fit:contain; margin:0 auto -8px}
+  .rp-firma .linea{border-top:1px solid var(--tinta); width:230px; margin:0 auto 6px}
+  .rp-firma b{display:block; font-size:12px}
+  .rp-firma small{display:block; font-size:10px; color:var(--gris)}
+  .rp-firma .timbre{font-size:8px; letter-spacing:.15em; text-transform:uppercase; color:var(--gris); margin-top:4px}
+  .rp-pie{margin-top:20px; text-align:center; font-size:8px; color:#bcc2bd; letter-spacing:.05em}
+</style>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+<header>
+  <span class="logo" id="appLogo"></span>
+  <h1>Recetario Veterinario</h1>
+</header>
+
+<main>
+  <!-- ============ NUEVA RECETA ============ -->
+  <section id="tab-receta" class="tab activa">
+    <div class="card">
+      <h2>Nueva receta</h2>
+
+      <label for="selCliente">Cliente / Propietario</label>
+      <div class="fila">
+        <select id="selCliente"></select>
+        <button class="btn sec chico" style="flex:0 0 auto" onclick="nuevoClienteRapido()">+ Nuevo</button>
+      </div>
+
+      <label>Tipo de receta</label>
+      <div class="toggle" id="toggleTipo">
+        <button data-tipo="simple" class="on">Simple (1 producto)</button>
+        <button data-tipo="consolidada">Consolidada (varios)</button>
+      </div>
+
+      <label>Fecha</label>
+      <input type="date" id="fechaReceta">
+
+      <label>Nota para el propietario <span style="color:var(--muted);font-weight:400">(opcional · aparece antes de la prescripción)</span></label>
+      <textarea id="notaReceta" rows="3" placeholder="Ej: indicaciones de manejo, contexto del tratamiento, recomendaciones…"></textarea>
+
+      <h3>Productos</h3>
+      <div id="itemsReceta"></div>
+
+      <div class="buscador">
+        <input type="text" id="buscarMed" placeholder="Toca aquí para ver o buscar un medicamento…" autocomplete="off">
+        <button type="button" id="buscarMedFlecha" aria-label="Ver lista">▾</button>
+        <div id="sugerenciasMed" class="sugerencias" hidden></div>
+      </div>
+      <div class="acciones">
+        <button class="btn sec chico" onclick="agregarItemVacio()">+ Producto en blanco</button>
+      </div>
+
+      <div id="avisoReceta"></div>
+
+      <div class="acciones">
+        <button class="btn" onclick="previsualizar()">Vista previa / PDF</button>
+        <button class="btn gris" onclick="guardarReceta()">Guardar en historial</button>
+        <button class="btn gris chico" onclick="limpiarReceta()">Limpiar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLIENTES ============ -->
+  <section id="tab-clientes" class="tab">
+    <div class="card">
+      <h2>Clientes</h2>
+      <input type="text" id="filtroCliente" placeholder="Buscar cliente…" autocomplete="off">
+      <div class="acciones"><button class="btn chico" onclick="editarCliente()">+ Nuevo cliente</button></div>
+      <ul class="lista" id="listaClientes"></ul>
+    </div>
+  </section>
+
+  <!-- ============ MEDICAMENTOS ============ -->
+  <section id="tab-medicamentos" class="tab">
+    <div class="card">
+      <h2>Medicamentos <span class="pill" id="contMed"></span></h2>
+      <input type="text" id="filtroMed" placeholder="Buscar medicamento…" autocomplete="off">
+      <div class="acciones">
+        <button class="btn chico" onclick="editarMedicamento()">+ Nuevo</button>
+        <button class="btn gris chico" onclick="restaurarBase()">Restaurar base original</button>
+      </div>
+      <ul class="lista" id="listaMedicamentos"></ul>
+    </div>
+  </section>
+
+  <!-- ============ HISTORIAL ============ -->
+  <section id="tab-historial" class="tab">
+    <div class="card">
+      <h2>Historial de recetas</h2>
+      <input type="text" id="filtroHist" placeholder="Buscar por cliente o producto…" autocomplete="off">
+      <ul class="lista" id="listaHistorial"></ul>
+    </div>
+  </section>
+
+  <!-- ============ AJUSTES ============ -->
+  <section id="tab-ajustes" class="tab">
+    <div class="card">
+      <h2>Encabezado de la receta</h2>
+      <p style="font-size:13px;color:var(--muted);margin:.2em 0 4px">Estos datos aparecen en el encabezado y la firma de cada receta.</p>
+      <label>Nombre</label><input id="vetNombre">
+      <label>Título / rol profesional</label><input id="vetRol" placeholder="Médico Veterinario">
+      <div class="fila">
+        <div><label>RUT</label><input id="vetRut"></div>
+        <div><label>N° Colegio / registro (opcional)</label><input id="vetColegio"></div>
+      </div>
+      <label>Registro SAG</label><input id="vetSag" placeholder="REG SAG N° 7081 / año 2021">
+      <label>Dirección</label><input id="vetDireccion">
+      <label>Ciudad (aparece junto a la fecha)</label><input id="vetCiudad">
+      <div class="fila">
+        <div><label>Teléfono (opcional)</label><input id="vetTelefono"></div>
+        <div><label>Email (opcional)</label><input id="vetEmail"></div>
+      </div>
+      <label>Texto bajo la firma</label><input id="vetFirma" placeholder="Médico Veterinario">
+
+      <h3>Logo</h3>
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:6px">
+        <div id="vetLogoPrev" style="width:60px;height:60px;flex:0 0 60px;border:1px solid var(--linea);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff"></div>
+        <div style="font-size:13px;color:var(--muted)">Sube tu logo/sello (PNG/JPG). Queda guardado solo en este dispositivo.</div>
+      </div>
+      <div class="acciones">
+        <label class="btn sec chico" style="margin:0">Subir logo
+          <input type="file" id="vetLogoFile" accept="image/*" hidden onchange="subirLogo(this)">
+        </label>
+        <button class="btn gris chico" onclick="quitarLogo()">Usar logo por defecto</button>
+      </div>
+
+      <h3>Firma</h3>
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:6px">
+        <div id="vetFirmaPrev" style="width:120px;height:48px;flex:0 0 120px;border:1px solid var(--linea);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff"></div>
+        <div style="font-size:13px;color:var(--muted)">Sube tu firma <b>una sola vez</b>: queda guardada solo en este dispositivo (nunca en la web). Ideal PNG con fondo transparente.</div>
+      </div>
+      <div class="acciones">
+        <label class="btn sec chico" style="margin:0">Subir firma
+          <input type="file" id="vetFirmaFile" accept="image/*" hidden onchange="subirFirma(this)">
+        </label>
+        <button class="btn gris chico" onclick="quitarFirma()">Quitar firma</button>
+      </div>
+
+      <div class="acciones" style="margin-top:14px"><button class="btn" onclick="guardarVet()">Guardar encabezado</button></div>
+      <div id="avisoVet"></div>
+    </div>
+    <div class="card">
+      <h2>Respaldo de datos</h2>
+      <p style="font-size:13px;color:var(--muted);margin:.2em 0 0">
+        Toda la información (clientes, medicamentos, historial) vive en este dispositivo.
+        Exporta un respaldo con frecuencia y para pasar los datos a otro teléfono/Mac.
+      </p>
+      <div class="acciones">
+        <button class="btn" onclick="exportarDatos()">Exportar respaldo (.json)</button>
+        <label class="btn sec" style="margin:0">Importar respaldo
+          <input type="file" id="fileImport" accept="application/json,.json" hidden onchange="importarDatos(this)">
+        </label>
+      </div>
+      <div id="avisoAjustes"></div>
+    </div>
+    <div class="card">
+      <h2>Acerca de</h2>
+      <p style="font-size:13px;color:var(--muted);margin:0">
+        Recetario Veterinario · app local sin conexión.<br>
+        Base de medicamentos inicial: <span id="baseCount"></span> productos importados desde el Excel de Los Leones.<br>
+        Datos guardados en: almacenamiento local del navegador.
+      </p>
+    </div>
+  </section>
+</main>
+
+<nav>
+  <button data-tab="tab-receta" class="activa"><span class="ic">℞</span>Receta</button>
+  <button data-tab="tab-clientes"><span class="ic">👤</span>Clientes</button>
+  <button data-tab="tab-medicamentos"><span class="ic">💊</span>Fármacos</button>
+  <button data-tab="tab-historial"><span class="ic">🗂️</span>Historial</button>
+  <button data-tab="tab-ajustes"><span class="ic">⚙️</span>Ajustes</button>
+</nav>
+
+<div id="impresion"></div>
+
+<!-- Diálogo genérico -->
+<dialog id="dlg"><div class="dlg-cuerpo" id="dlgCuerpo"></div></dialog>
+
+<script>
+/* =================== BASE DE MEDICAMENTOS (del Excel) =================== */
+const BASE_MEDICAMENTOS = [["Abamec L.A. 1%","500 ml","1cc/50 kg SC","1 vez","55","NO USAR","",""],["Actigor","100 ml","7 cc IM","1 vez","0","0","",""],["Albadry Plus","cj x 20 jg","1 pomo por cuarto","1 vez","30","3","",""],["All Trace Cattle","caja de bolos","2 bolos/animal mayor a 150 kg","1 vez","0","0","suplemento oligoelementos","Suplemento alimenticio"],["Amplifort","caja de jeringas","1 pomo por cuarto","c/12 h","7 días","60 horas","","Mastitis clínica"],["Azovetril","5 lt","40 cc/100 kg oral","1 vez","28","2","",""],["Baxtrovet","100 ml","1 cc/10 kg IM","c/24hrs x 4 veces","40","NO USAR","",""],["Baycox","1 lt","3 ml/10 kg oral","1 vez","","","",""],["Baymec","500 ml","1 cc/50 kg sc","1 vez","49","NO USAR","",""],["Baymec Prolong","500 ml","1 cc/50 kg sc","1 vez","55","NO USAR","",""],["Benzoato de Estradiol","50 ml","2 cc IM","1 vez","","","","Sincronización de celo"],["Bezapen","1fco amp","1 amp c/200 kg 1 vez","1 vez","30","NO USAR","",""],["Bilifar","sobre 120 gr","1 sobre oral","c/12 hr x2 veces","","","",""],["Biopect","5 kg","2 gr/kg","c/12 hr  x 8 veces","","","",""],["Biosolamine","100 ml","25 cc","1 vez","0","0","",""],["Biosuspen","100 ml","1 cc/25 kg","c/48 hr x 3 veces","30","10","",""],["Bisolvon","100 ml","8 a 30 cc /día","x3 dás","0","0","",""],["Bofoscal","500 ml","1 fco EV","1 vez","0","0","",""],["Bovical - P","500 ml","1 fco Oral","1 vez","","","","Suplemento alimenticio"],["Boviford","500ml","1 cc/50 kg sc","1vez,","49","NO USAR","",""],["Bovipast","50 ml","5 cc SC","1vez, rep a los 20 d","","","",""],["Buscapina","50 ml","tern 5 cc vaca 20 cc IM EV","c/12 hr","35","NO USAR","",""],["Calf Digest","cj x 25 bolos","1 bolo Oral","c/12 hr x 2 días","","","",""],["Calf Renova","cj x 12 cap","1 Cap Oral","c/24 hr x 3 días","","","",""],["Calfodex","500 ml","1 fco EV","1 vez","0","0","","Hipocalcemia"],["Calfoma 12","500 ml","1 fco EV","1 vez","0","0","",""],["Calfoma Plus","500 ml","1 fco EV","1 vez","0","0","","Hipocalcemia"],["Cardiotónico","cj x 3 amp","1 amp","1 vez","","","",""],["Cattlemaster  Gold FP 5","25 dosis","2 cc SC","1 vez","21","0","",""],["Cattlemaster 4","50 dosis","2 cc SC","1 vez","21","0","",""],["Cattlemaster 4 + L5","25 dosis","5 cc IM","1 vez","21","0","",""],["Cefa-Dri","cj x 12 jg","1 pomo por cuarto","1 vez","42","72","",""],["Cefa-Lak","cj x 12 jg","1 pomo / cuarto","c/12 hr x 2 veces","4","4","",""],["Cefa-Safe","cj x 20 jg","1 pomo por cuarto","1 vez","42","2 pp / 35","","Terapia antibiótica vaca seca"],["Ceftidrag","","1 ml/50 kg IM o SC","1 vez, repetir a los 5 días","10 días","0","ceftiofur","Retención de placenta"],["Cepravin","cj x 20 jg","1 pomo por cuarto","1 vez","","","","Terapia de secado"],["CIDR","10 impl","1 impl I vaginal","1 vez","0","0","","Sincronización de estro"],["Clorafur 50 %","500 gr","5 gr oral","c/24 hr x 7 dias","30","NO USAR","neomicina",""],["Clostribac 8","50 dosis","5 cc SC","1 vez","21","0","",""],["Clostribac 8 Gold","50 dosis","2 cc SC","1 vez","21","0","","Vacuna clostridiales"],["Clostribac 9P","50 dosis","2 cc SC","1 vez","21","0","",""],["Cobactan 2,5%","100 ml","2 a 4 cc/50 kg IM","c/24 hr x 5 días","5","1","",""],["Cobactan DC","cj x 12 jg","1 pomo por cuarto","1 vez","0","1","",""],["Cobactan LC","cj x 15 jg","1 pomo / cuarto","c/12 x 3 veces","2","4","",""],["Coforta con Vit. B12","100 ml","10 cc IM","1 vez","0","0","","Deficiencias de vitaminas"],["Colimic","50 ml","5 cc IM","c/12 hr x 2 veces","","","",""],["Colublock Destete + Anticox","bloque","según requerimiento del animal","ad libitum","0","0","sales minerales","Sales minerales"],["Commander","1 lt","20 cc pour on","1 vez","","","",""],["Conceptal","50 ml","2,5 cc IM","1 vez","0","0","","Estimulación ovárica"],["Cortidrag","125 ml","loción tópica","1 vez","","","",""],["Cortivet","50 ml","15 cc IM","1 vez","","","",""],["Covexin 8","100 dosis","5 cc SC","1 vez","21","0","",""],["Cydectin","500 ml","1cc/50 kg SC","1 vez","35","NO USAR","",""],["Dectomax","500 ml","1cc/50 kg SC","1 vez","42 dias","NO USAR","",""],["Della Barrier","bidón","inmersión de pezones post ordeña","cada ordeña","0","0","uso tópico, sellador","Sellador de pezones"],["Devan","50 ml","15 cc IM","1 vez","21","3","",""],["Dexabiopen","100 ml","20 cc IM","c/24 hr x 5 días","30","2.5","","Mastitis subclínica"],["Dexafort","50 ml","15 cc IM 1 vez","1 vez","36","6","",""],["Diarrevet","50 gr","1 sobre oral","c/12 hr x 4 veces","","","",""],["Digestivo Ruminal","sobre","1 sobre oral","1 vez","0","0","",""],["Dolvet","50 ml","17 cc IM","1 vez","","","",""],["Doractina","500 ml","1 cc/50 kg","1 vez","","","",""],["Dovenix","1 lt","1 cc/25 kg SC","1 vez","60","NO USAR","",""],["Draxxin","50 ml","1 cc/40kg IM","1 vez","60","60","",""],["Duflosan 30","100 ml","1 cc/20 kg","c/48 hrs x 3 veces","15","NO USAR","florfenicol",""],["ECP","10 ml","2 a 5 ccIM 1 vez","1 vez","70","0","","Sincronización de celo"],["Enviracor","50 dosis","5 cc SC secado, 30 d y 21 días pp","1 vez","0","0","",""],["Eprinex 0,5%","1 lt","1 cc/10 kg pour on","1 vez","0","0","","Antiparasitario interno y externo"],["Erbacolina","100 ml","10 cc IM","c/24 hr x 3 días","0","0","",""],["Estreptozol","cj x 50 tabl","1 comp oral","c/12 hr x 2 días oral","15","4","",""],["Estrumate","50 ml","2 cc IM","1 vez","24","0","","Endometritis grado 1 y 2"],["Expert 20%","25 aretes","1 arete por temporada","1 vez","0","0","",""],["Expert Plus","25 aretes","1 arete por temporada","1 vez","0","0","",""],["Facilpart","100 ml","3 cc EV IM","1 vez","3","1","",""],["Fatroximin","cj x 12 jg","1 pomo por cuarto","1 vez","","","",""],["Febrectal","50 ml","20 cc EV IM","c/12 hr x 2 veces","","","","Antiinflamatorio"],["Finadyne","50 ml","20 cc ev IM","c/12 hr x 2 veces","7","2","","Antiinflamatorio"],["Flunimic","100 ml","20 cc ev IM","c/12 hr x 2 veces","7","2","",""],["Flynex","","","","","","",""],["Fortress","50 dosis","2 cc Sc","1 vez","21","0","",""],["Gentamicina","100 ml","0,5 ml x 10 kg","c/12 hr x 5 días","14","NO USAR","",""],["Glutellac","50 ml","1 envase","c/12 hr x 4 veces","","","",""],["Gonasyl","20 ml","2,5 ml IM","1 vez","","","",""],["Gorban","50 ml","3 cc/50 kg IM","c/24 hr x4 días","","","",""],["Halocur","490 ml","2 cc/10 kg","c/24 hr x 7 días","","","",""],["Hasyun","100 ml","15 cc IM","1 vez","5","3","",""],["Hematon","100 ml","20 cc IM","c/24 hr x 5 días","0","0","","Trastornos metabólicos"],["Hematopan","100 ml","20 cc IM","c/24 hr x 5 días","0","0","",""],["Hemodrag","20 ml","1 fco EV","1 vez","","","",""],["Hepatovet","100 ml","20cc","c/24 hr x 5 días","","","",""],["Heprotec","100 ml","20cc","c/24 hr x 5 días","","","",""],["Hidratante-Energizante","cj x 12 sob","1 sobre","c/12 hrs x 4 veces","","","",""],["Histocrem","450 gr","tópico","cada ordeña x 6 veces","","","",""],["Inforce 3","20 ml","2 cc Intranasal","1 vez","","","",""],["Inveade","100 ml","10 cc IM","1 vez","","","","Déficit de vitaminas"],["Invectina 1%","500 ml","1 cc/50 kg SC","1 vez","49","NO USAR","",""],["Ivervet","500 ml","1 cc/50 kg SC","1 vez","49","NO USAR","",""],["Ivomec","500 ml","1 cc/50 kg SC","1 vez","28","NO USAR","",""],["Ivomec - F","500 ml","1 cc/50 kg SC","1 vez","49","NO USAR","",""],["Ivomec Gold","","1 ml/50 kg SC","1 vez","129 días","NO USAR","","Desparasitación interna y externa"],["Ivomec L.A","500 ml","1 cc/50 kg SC","1 vez","122","NO USAR","",""],["Kaupol","500 ml","500 cc EV","1 vez","","","",""],["Ket 10","50 ml","15 cc EV","c/12 hr x 2 veces","","","",""],["Ketofen","100 ml","3cc/100 kg IM","c/12 hr x3 veces","","","",""],["larvispray","200 ml","local","c/ 12 hr","","","",""],["Lepto Shield 5","50 dosis","2 cc IM","1 vez","21","0","","Vacuna leptospira / IBR-BVD-PI3"],["Leptoferm","","2 ml/animal IM","1 vez","21 días","0","vacuna","Vacuna clostridiales"],["Levantel","1 lt","1 cc/15 kg SC","1 vez","28","NO USAR","",""],["Lidocalm","50 ml","csp, no más de 50 ml","1 vez","28","7","",""],["Lincocin Forte","cj x 24 jg","1 pomo / cuarto","c/12 hr x3 veces","3","3","",""],["Lincospectin S.S.","100 ml","1 cc/10 kg IM","c/24 hr x5 días","21","NO USAR","",""],["Liquamicina   LA","100 ml","1 cc/10 kg IM 1 vez","1 vez","28","5","","Mastitis subclínica"],["Liquamicina  LA","250 ml","1 cc/10 kg IM 1 vez","1 vez","28","5","",""],["Liquamicina L A","50 ml","1 cc/10 kg IM 1 vez","1 vez","28","5","",""],["Lutalyse","","5 ml/vaca IM","1 vez","21 días","0","dinoprost","Sincronización de celo / luteólisis"],["Magnadur LA 300","100 ml","1 cc/10 kg IM 1 vez","1 vez","28","14","",""],["Magnekal","100 ml","1 fco en el calcio EV","1 vez","0","0","","Deficiencias de minerales"],["Mamyzin S","cj x 20 jg","1 pomo por cuarto","1 vez","","","",""],["Mastilac","cj x 12 jg","1 pomo / cuarto","c/12 hr x3 veces","14","2","",""],["Mastilac iny","100 ml","1 cc/20 kg","c/24 hrs x 5 días","","","","Mastitis clínica"],["Mastiplan LC","c x 20 jg","1 pomo / cuarto","c/12 hrs x 2 veces","","","","Mastitis clínica"],["Mastitis Secado","cj x 4 jg","1 pomo por cuarto","1 vez","28","30","",""],["Matilen Compuesto Lento","","1 pomo por cuarto","1 vez","28","4 pp","",""],["Maxinyl  Dispert","500 ml","1 cc/50 kg SC","1 vez","60","NO USAR","",""],["Metricure","cj x 10 jg","1 pomo intrauterino","1 vez","","","",""],["Metricure","","","","0 dias","24 horas","",""],["Micospectone","100 ml","1 cc/10 kg IM","c/24 hr x5 días","20","3","",""],["Mobexvet","100 ml","2,5 cc/100 kg IM","c/24 hrs x 2 veces","15","5","",""],["Moskation","100 gr","tópico","c/12 hr x 4 veces","","","",""],["Moskimat","25 aretes","1 arete por temporada","1 vez","0","0","",""],["Moskimic","1 lt","20 cc pour on","1 vez","0","2","",""],["Moskimit Forte","1 lt","20 cc pour on","1 vez","0","2","",""],["Nafpenzal D.C.","","1 pomo por cuarto","1 vez","28","5","",""],["Nafpenzal MC","","1 pomo / cuarto","c/24 hr x 3 días","7","4","",""],["Naquasone","25 ml","1 fco IM","1 vez","21","2","",""],["Negasunt","","tópico","1 vez","0","0","",""],["Neguvon","","tópico","1 vez","30","NO USAR","",""],["Neurofisin","100 ml","3 cc EV IM","1 vez","1","1","","Mastitis subclínica"],["Nitroxifar","500 ml","1 cc/ 25 kg SC","1 vez","","","",""],["Noromectin 1%","500 ml","1cc/50 kg SC","1 vez","29","NO USAR","",""],["Noromectin 1%","500 ml","1 cc/50 kg sc","1 vez","29","NO USAR","",""],["Novormon","fco ampo","2 cc IM","1 vez","30","0","","Estimulación ovárica"],["Nuflor","100 ml","1 cc/15 kg SC","c/48 hr x 2veces","38","NO USAR","",""],["Orbenin","cj x 36 jg","1 pomo por cuarto","1 vez","","","",""],["Orbeseal","cj x 24 jg","1 pomo por cuarto","1 vez","0","NO USAR","","Sellador de pezones"],["Ovalyse","10 ml","1 cc a la IA","1 vez","","","",""],["Oxitetraciclina 10%","100 ml","1 cc/10 kg IM","1 vez","","","",""],["Oxitocina","100 ml","2 cc EV","cada ordeña x 6 veces","","","","Mastitis subclínica"],["Panacur 10%","x 1 lt","7,5 cc/100 kg oral","1 vez","9","4","",""],["Panvex","100 ml","1cc/10 kg IM","1 vez","","","",""],["Pathozone","cj x 10 jg","1 pomo","1 vez","5","84 hrs","",""],["Pederol","250 ml","local","1 vez","","","",""],["Pediline","x 10 lt","tópico","","0","0","",""],["Pencidrag","100 ml","20 cc IM","c/24 hr x 5 días","","","",""],["Pencivet","fco amp","1 amp c/200 kg","1 vez","30","NO USAR","",""],["Penicilina Sódica","cj x 4 amp","1 amp c/100 kg IM","c/12 hr x 5 días","","","",""],["Pirsue","cj x 12 jg","1 pomo / cuarto","c/24 hr x 2veces","21","1.5","","Mastitis clínica"],["Propilenglicol","bidón","500 ml/vaca oral","repetir c/24 h x 5 días","0","0","","Cetosis"],["Rehsal","cj x 25 sob","1 sobre","c/12 hrs x 4 veces","","","","Deshidratación en terneros"],["Resflor","100 ml","2 cc/15 kg SC","1 vez","","","",""],["Ridavet","1 lt","200 cc oral","c 12 hrs x 4 veces","","","",""],["Rilexine 150","100 ml","1 cc/15 kg IM","c/24 hr x 3 veces","30","4","",""],["Rilexine 200","100 ml","1 pomo / cuarto","c/12 hr x 4 veces","4","1","",""],["Rimadyl","50 ml","1 cc c/35 kg Sc EV","1 vez","21","0","","Analgésico"],["Roborante Calier","","10 a 25 ml/vaca EV o SC","1 a 3 días","0","0","","Trastornos metabólicos"],["Rompun","10 ml","1 cc/100 kg IM EV","1 vez","0","0","",""],["Rostrum 5%","100 ml","1 cc/20 kg IM","c/24 hr x 5 días","14","NO USAR","",""],["Rotavec","20 dosis","2 cc SC","1 vez","28","NO USAR","",""],["Salfen","100 ml","1 cc c/15 kg IM","c/24 hr x 5 días","30","4","",""],["Scouguard","50 dosis","2 cc SC al secado","1 vez","21","NO USAR","",""],["Secomast Extra","cj x 120 jg","1 pomo por cuarto","1 vez","28","50 pp / 4","",""],["Selenito de Sodio","100 ml","1 cc /100 kg Im","1 vez","0","0","",""],["Septilisin","100 ml","1 cc/50 kg Im","c/24 x 4 días","2","0","",""],["Shutout","cj x 24 jg","1 pomo por cuarto","1 vez","0","0","",""],["Soforen 10%","x 1 lt","10 cc/100 kg oral","1 vez","28","NO USAR","",""],["Soforen Plus","x 1 lt","10 cc/100 kg oral","1 vez","28","NO USAR","",""],["Solution 3,5 %","500 cc","1 cc/50 kg SC","1 vez","105 dias","NO USAR","",""],["Spectramast DC","cj x 12 jg","1 pomo por cuarto","1 vez","16","30","","Terapia de secado"],["Spectramast LC","cj x 12 jg","1 pomo / cuarto","c/24 hr x 2 veces","2","3","",""],["Steclin 20%","100 ml","1 cc/10 kg IM","1 vez","28","14","",""],["Sulfaquinoxalina","5 lt","40 cc/100 kg oral","c/24 hrs x 5 días","","","",""],["Supolen","1 lt","10 cc/100 kg oral","1 vez","28","NO USAR","",""],["Supolen 10%","1 lt","10 cc/100 kg oral","1 vez","28","NO USAR","",""],["Supolen Plus","1 lt","10 cc/100 kg oral","1 vez","28","NO USAR","",""],["Teril","fco 500 ml","100 a 250 cc oral","1 vez","1","1","",""],["Terracortril","125 ml","local","","","","",""],["Terrivet 20% L.A","100 ml","1 cc/10 kg IM","1 vez","29","14","",""],["Terrivet L.A","100 ml","1 cc/10 kg IM","1 vez","21","7","",""],["Tilosina","100 ml","1 cc/10 kg","c/24 hra x 5 días","21","4","",""],["Tocoper","fco 250 ml","tópico","","0","0","",""],["Tonimag","100 ml","1 fco en el calcio","1 vez","0","0","",""],["Tonofosan 20%","100 ml","10 cc IM","c/24 hr x 3 días","0","0","",""],["Treo Ace","500 ml","1 cc/50 kg SC","1 vez","","","",""],["Trisoprim","100 ml","1,5 cc/30 kg","c/24 hra x 5 días","","","",""],["Tylan 200","250 ml","20 cc IM c/24 x 4 días","1 vez","21","4","","Mastitis clínica"],["Ubret DC","cj x 4 jg","1 pomo por cuarto","1 vez","28","4 pp","",""],["Ubret MC","cj x 4 jg","1 pomo / cuarto","c/12 hr x 3 veces","7","78 hr","",""],["Ubrisec","cj x 4 jg","1 pomo por cuarto","1 vez","30","30","",""],["Ubrolexin pomo","cj x 20 jg","1 pomo / cuarto","c/24 hr x 2 veces","10 ordeñas","10 dias","","Mastitis clínica"],["Veterin 30","100 ml","5cc IM","1 vez","NO USAR","30","",""],["Vetervit ADE","100 ml","10 cc IM","1 vez","0","0","",""],["Vigantol ADE Fuerte","100 ml","7 cc IM","1 vez","0","0","",""],["Virbamec F","100 ml","1 cc/50 kg sc","1 vez","49","NO USAR","",""],["Virbamec L.A","500 ml","1 cc/50 kg sc","1 vez","49","NO USAR","",""],["Vision 8","100 ml","2 cc SC","1 vez","0","0","","Vacuna clostridiales"],["Vitadol","100 ml","7 cc IM","1 vez","0","0","",""],["Vitamina B","50 ml","10 ml","c/24 x 3 veces","","","",""],["Vitamina E + Se","100 ml","10cc Im","1 vez","","","",""],["Vitamina Triple B1, B6, B12","amp","2 amp IM","c/24 hr x 2 veces","0","0","","Deficiencias de vitamina B"],["Vitequin","100 ml","10 cc IM","1 vez","30","NO USAR","",""],["Vivefort","amp 10 ml","1 a 3 amo EV","1 vez","","","","Hipocalcemia"],["Xila - 10","50 ml","0,3 cc/100 kg EV IM","1 vez","14","NO USAR","",""]].map(function(r){
+  return {nombre:r[0], presentacion:r[1], dosis:r[2], frecuencia:r[3], resg_carne:r[4], resg_leche:r[5], nota:r[6], indicacion:r[7]||''};
+});
+
+/* =================== LOGO POR DEFECTO (sello Carolina Cabrera) =================== */
+const LOGO_IMG = '';  /* web: sin logo embebido */
+function logoTag(src, cls){ src = src || LOGO_IMG; return src ? '<img src="'+esc(src)+'" alt="Logo"'+(cls?' class="'+cls+'"':'')+'>' : ''; }
+
+/* =================== FIRMA POR DEFECTO (rúbrica Carolina Cabrera) =================== */
+const FIRMA_IMG = '';  /* web: sin firma embebida */
+
+/* =================== ALMACENAMIENTO =================== */
+const KEY = 'recetario_v1';
+const VET_DEFECTO = {
+  nombre:'',
+  rol:'Médico Veterinario',
+  rut:'',
+  direccion:'',
+  ciudad:'',
+  telefono:'',
+  email:'',
+  colegio:'',
+  sag:'',
+  firma:'Médico Veterinario',
+  logo:'',       /* data URI opcional; si vacío se usa LOGO_IMG (sello por defecto) */
+  firmaImg:''    /* data URI opcional; si vacío se usa FIRMA_IMG (rúbrica por defecto) */
+};
+const CLIENTE_DEFECTO = {nombre:'Soc Los Leones Ltda', rup:'10.5.04.0197', direccion:'Camino Lago Ranco s/n'};
+
+function nuevoId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+function estadoInicial(){
+  return {
+    vet: Object.assign({}, VET_DEFECTO),
+    clientes: [],
+    medicamentos: BASE_MEDICAMENTOS.map(function(m){ return Object.assign({id:nuevoId()}, m); }),
+    recetas: []
+  };
+}
+let DB;
+function cargar(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(raw){ DB = JSON.parse(raw); }
+    else { DB = estadoInicial(); guardar(); }
+  }catch(e){ DB = estadoInicial(); }
+  DB.vet = Object.assign({}, VET_DEFECTO, DB.vet || {});
+  if(!Array.isArray(DB.clientes)) DB.clientes = [];
+  if(!Array.isArray(DB.medicamentos)) DB.medicamentos = [];
+  if(!Array.isArray(DB.recetas)) DB.recetas = [];
+  if(typeof DB.folio !== 'number') DB.folio = 0;
+  sincronizarBase();
+}
+/* Añade medicamentos nuevos de la base y completa indicaciones faltantes,
+   sin tocar lo que el usuario haya editado. Idempotente. */
+const BASE_V = 2;
+function sincronizarBase(){
+  if((DB.baseV||0) >= BASE_V) return;
+  const have = {};
+  DB.medicamentos.forEach(function(x){ have[(x.nombre||'').toLowerCase().trim()] = x; });
+  BASE_MEDICAMENTOS.forEach(function(bm){
+    const ex = have[bm.nombre.toLowerCase().trim()];
+    if(!ex){ DB.medicamentos.push(Object.assign({id:nuevoId()}, bm)); }
+    else if(!ex.indicacion && bm.indicacion){ ex.indicacion = bm.indicacion; }
+  });
+  DB.baseV = BASE_V;
+  guardar();
+}
+function guardar(){
+  try{ localStorage.setItem(KEY, JSON.stringify(DB)); }
+  catch(e){ alert('No se pudo guardar en este dispositivo: ' + e.message); }
+}
+
+/* =================== NAVEGACIÓN =================== */
+document.querySelectorAll('nav button').forEach(function(b){
+  b.addEventListener('click', function(){
+    document.querySelectorAll('nav button').forEach(x=>x.classList.remove('activa'));
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('activa'));
+    b.classList.add('activa');
+    document.getElementById(b.dataset.tab).classList.add('activa');
+    if(b.dataset.tab==='tab-clientes') renderClientes();
+    if(b.dataset.tab==='tab-medicamentos') renderMedicamentos();
+    if(b.dataset.tab==='tab-historial') renderHistorial();
+    window.scrollTo(0,0);
+  });
+});
+
+/* =================== UTILIDADES =================== */
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function hoyISO(){ const d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,10); }
+function fechaLarga(iso){
+  if(!iso) return '';
+  const p = iso.split('-'); if(p.length!==3) return iso;
+  const meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  return parseInt(p[2],10)+' de '+meses[parseInt(p[1],10)-1]+' de '+p[0];
+}
+function inferirVia(txt){
+  const t=(txt||'').toLowerCase();
+  if(/pomo|cuarto|intramam/.test(t)) return 'Intramamaria';
+  if(/intrauter|iu\b/.test(t)) return 'Intrauterina';
+  if(/i\s*vaginal|intravag/.test(t)) return 'Intravaginal';
+  if(/pour on|pour-on/.test(t)) return 'Pour on';
+  if(/intranasal/.test(t)) return 'Intranasal';
+  if(/\bev\b|endoven|\biv\b/.test(t)) return 'Endovenosa';
+  if(/\bim\b|intramus/.test(t)) return 'Intramuscular';
+  if(/\bsc\b|subcut/.test(t)) return 'Subcutánea';
+  if(/oral|bolo|sobre|comp\b|tableta|brebaje/.test(t)) return 'Oral';
+  if(/tópic|topic|local|loción|locion|spray/.test(t)) return 'Tópica';
+  return '';
+}
+function fmtResg(v){
+  const s=(v==null?'':String(v)).trim();
+  if(!s) return '';
+  if(/^\d+([.,]\d+)?$/.test(s)) return s+' día'+(s==='1'?'':'s');
+  return s;
+}
+function toast(cont, texto, tipo){
+  const el=document.getElementById(cont);
+  el.innerHTML = '<div class="'+(tipo||'ok')+'">'+esc(texto)+'</div>';
+  setTimeout(function(){ if(el.firstChild) el.innerHTML=''; }, 4000);
+}
+
+/* =================== DIÁLOGO =================== */
+const dlg = document.getElementById('dlg');
+function abrirDlg(html){ document.getElementById('dlgCuerpo').innerHTML = html; dlg.showModal(); }
+function cerrarDlg(){ dlg.close(); }
+dlg.addEventListener('click', function(e){ if(e.target===dlg) dlg.close(); });
+
+/* =================== NUEVA RECETA =================== */
+let receta = { tipo:'simple', clienteId:null, fecha:hoyISO(), nota:'', items:[] };
+
+function renderSelectCliente(){
+  const sel = document.getElementById('selCliente');
+  sel.innerHTML = DB.clientes.length
+    ? DB.clientes.slice().sort((a,b)=>a.nombre.localeCompare(b.nombre))
+        .map(c=>'<option value="'+c.id+'">'+esc(c.nombre)+'</option>').join('')
+    : '<option value="">— sin clientes —</option>';
+  if(DB.clientes.length){
+    if(!receta.clienteId || !DB.clientes.some(c=>c.id===receta.clienteId)) receta.clienteId = DB.clientes[0].id;
+    sel.value = receta.clienteId;
+  }
+}
+document.getElementById('selCliente').addEventListener('change', function(){ receta.clienteId = this.value; });
+document.getElementById('fechaReceta').addEventListener('change', function(){ receta.fecha = this.value; });
+document.getElementById('notaReceta').addEventListener('input', function(){ receta.nota = this.value; });
+
+document.querySelectorAll('#toggleTipo button').forEach(function(b){
+  b.addEventListener('click', function(){
+    receta.tipo = b.dataset.tipo;
+    document.querySelectorAll('#toggleTipo button').forEach(x=>x.classList.toggle('on', x===b));
+    if(receta.tipo==='simple' && receta.items.length>1){ receta.items = receta.items.slice(0,1); }
+    renderItems();
+  });
+});
+
+function itemDesdeMed(m){
+  return {
+    producto:m.nombre, presentacion:m.presentacion||'',
+    indicacion:m.indicacion||'', especie:'Bovino',
+    dosis:m.dosis||'', via:inferirVia(m.dosis),
+    resg_leche:fmtResg(m.resg_leche),
+    cantidad:'', ritmo:m.frecuencia||'',
+    resg_carne:fmtResg(m.resg_carne),
+    obs:(m.nota||'')
+  };
+}
+function agregarItem(it){
+  if(receta.tipo==='simple') receta.items = [it];
+  else receta.items.push(it);
+  renderItems();
+}
+function agregarItemVacio(){
+  agregarItem({producto:'',presentacion:'',indicacion:'',especie:'Bovino',dosis:'',via:'',resg_leche:'',cantidad:'',ritmo:'',resg_carne:'',obs:''});
+}
+function quitarItem(i){ receta.items.splice(i,1); renderItems(); }
+
+function renderItems(){
+  const cont = document.getElementById('itemsReceta');
+  if(!receta.items.length){ cont.innerHTML = '<div class="vacio">Sin productos. Busca uno arriba o agrégalo en blanco.</div>'; return; }
+  cont.innerHTML = receta.items.map(function(it,i){
+    const campo=(et,key)=>'<label>'+et+'</label><input value="'+esc(it[key])+'" oninput="receta.items['+i+'].'+key+'=this.value">';
+    const area=(et,key)=>'<label>'+et+'</label><textarea oninput="receta.items['+i+'].'+key+'=this.value">'+esc(it[key])+'</textarea>';
+    return '<div class="item-receta">'
+      + '<div class="cab"><b>'+(receta.tipo==='consolidada'?('#'+(i+1)+' '):'')+esc(it.producto||'Producto')+'</b>'
+      + '<button class="btn peligro chico" onclick="quitarItem('+i+')">Quitar</button></div>'
+      + campo('Producto prescrito','producto')
+      + campo('Indicación / diagnóstico','indicacion')
+      + campo('Especie animal','especie')
+      + campo('Dosis','dosis')
+      + campo('Vía de administración','via')
+      + campo('Período de resguardo leche','resg_leche')
+      + campo('Cantidad','cantidad')
+      + campo('Ritmo horario','ritmo')
+      + campo('Período de resguardo carne','resg_carne')
+      + area('OBS / observaciones','obs')
+      + '</div>';
+  }).join('');
+}
+
+/* ---- buscador de medicamentos ---- */
+const inpBuscar = document.getElementById('buscarMed');
+const boxSug = document.getElementById('sugerenciasMed');
+let selSug = -1;
+function buscarMeds(q){
+  q = q.trim().toLowerCase();
+  const arr = DB.medicamentos.slice().sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  if(!q) return arr;                      // sin texto: lista completa (desplegable)
+  return arr
+    .filter(m => m.nombre.toLowerCase().includes(q))
+    .sort((a,b)=>a.nombre.toLowerCase().indexOf(q) - b.nombre.toLowerCase().indexOf(q) || a.nombre.localeCompare(b.nombre))
+    .slice(0,40);
+}
+function pintarSug(){
+  const q = inpBuscar.value;
+  const res = buscarMeds(q);
+  selSug = -1;
+  if(!res.length){
+    boxSug.innerHTML = '<div class="nores">Sin coincidencias</div>';
+    boxSug._res = []; boxSug.hidden = false; return;
+  }
+  boxSug.innerHTML = res.map((m,i)=>'<div data-i="'+i+'" onclick="elegirSug('+i+')"><b>'+esc(m.nombre)+'</b>'
+    + '<small>'+esc([m.presentacion,m.dosis,m.frecuencia].filter(Boolean).join(' · '))+'</small></div>').join('');
+  boxSug._res = res;
+  boxSug.hidden = false;
+  boxSug.scrollTop = 0;
+}
+function abrirSug(){ pintarSug(); }
+function elegirSug(i){
+  const m = boxSug._res[i]; if(!m) return;
+  agregarItem(itemDesdeMed(m));
+  inpBuscar.value=''; boxSug.hidden=true;
+}
+inpBuscar.addEventListener('input', pintarSug);
+inpBuscar.addEventListener('focus', abrirSug);
+inpBuscar.addEventListener('click', abrirSug);
+document.getElementById('buscarMedFlecha').addEventListener('click', function(){
+  if(boxSug.hidden){ inpBuscar.focus(); abrirSug(); } else { boxSug.hidden = true; }
+});
+inpBuscar.addEventListener('keydown', function(e){
+  if(boxSug.hidden){ if(e.key==='ArrowDown'){ abrirSug(); } return; }
+  const divs = [].slice.call(boxSug.children).filter(d=>!d.classList.contains('nores'));
+  if(e.key==='ArrowDown'){ e.preventDefault(); selSug=Math.min(selSug+1,divs.length-1); }
+  else if(e.key==='ArrowUp'){ e.preventDefault(); selSug=Math.max(selSug-1,0); }
+  else if(e.key==='Enter'){ e.preventDefault(); if(selSug>=0) elegirSug(selSug); }
+  else if(e.key==='Escape'){ boxSug.hidden=true; return; }
+  else return;
+  divs.forEach((d,i)=>d.classList.toggle('sel', i===selSug));
+  if(divs[selSug]) divs[selSug].scrollIntoView({block:'nearest'});
+});
+document.addEventListener('click', function(e){
+  if(!e.target.closest('.buscador')) boxSug.hidden = true;
+});
+
+function limpiarReceta(){
+  receta = { tipo:receta.tipo, clienteId:receta.clienteId, fecha:hoyISO(), nota:'', items:[] };
+  document.getElementById('fechaReceta').value = receta.fecha;
+  document.getElementById('notaReceta').value = '';
+  renderItems();
+  document.getElementById('avisoReceta').innerHTML='';
+}
+
+function validarReceta(){
+  if(!receta.clienteId){ toast('avisoReceta','Selecciona un cliente.','aviso'); return false; }
+  if(!receta.items.length){ toast('avisoReceta','Agrega al menos un producto.','aviso'); return false; }
+  const sinNombre = receta.items.some(it=>!it.producto.trim());
+  if(sinNombre){ toast('avisoReceta','Hay un producto sin nombre.','aviso'); return false; }
+  return true;
+}
+
+function nuevoClienteRapido(){
+  editarCliente(null, function(nuevoId){ receta.clienteId = nuevoId; renderSelectCliente(); document.getElementById('selCliente').value = nuevoId; });
+}
+
+/* =================== VISTA PREVIA / IMPRESIÓN =================== */
+function folioTexto(n){ return 'N° ' + String(n||0).padStart(6,'0'); }
+
+function recetaHTML(r, cliente){
+  const v = DB.vet;
+  const esCons = r.tipo==='consolidada';
+  const folio = r.folio || (DB.folio + 1);
+  const sinGuardar = !r.folio;
+
+  /* --- encabezado profesional --- */
+  const marca = logoTag(v.logo);
+  const firmaSrc = v.firmaImg==='off' ? '' : (v.firmaImg || FIRMA_IMG || '');
+  const metaLineas = [];
+  metaLineas.push([v.rut ? 'RUT '+esc(v.rut) : '', v.colegio ? esc(v.colegio) : ''].filter(Boolean).join('  ·  '));
+  metaLineas.push(esc(v.sag||''));
+  metaLineas.push(esc(v.direccion||''));
+  metaLineas.push([v.telefono ? 'Tel. '+esc(v.telefono) : '', v.email ? esc(v.email) : ''].filter(Boolean).join('  ·  '));
+  const cab = '<div class="rp-cab">'
+    + (marca ? '<div class="marca">'+marca+'</div>' : '')
+    + '<div class="ident">'
+      + '<div class="nom">'+esc(v.nombre||'')+'</div>'
+      + '<div class="rol">'+esc(v.rol||'Médico Veterinario')+'</div>'
+      + '<div class="meta">'+metaLineas.filter(Boolean).join('<br>')+'</div>'
+    + '</div></div>'
+    + '<hr class="rp-regla"><hr class="rp-regla2">';
+
+  /* --- tarjetas de prescripción (mismo formato para simple y consolidada) --- */
+  const total = r.items.length;
+  function cardHTML(it, i){
+    const g=(k,val)=>'<div><div class="k">'+k+'</div><div class="val">'+esc(val||'—')+'</div></div>';
+    return '<div class="rp-card">'
+      + '<div class="tit">'
+        + '<div class="prod">'+(total>1?'<span class="n">℞'+(i+1)+'</span>':'')+esc(it.producto||'—')+'</div>'
+        + (it.especie ? '<div class="esp">'+esc(it.especie)+'</div>' : '')
+      + '</div>'
+      + (it.indicacion ? '<div class="ind">'+esc(it.indicacion)+'</div>' : '')
+      + '<div class="rp-grid">'
+        + g('Dosis', it.dosis)
+        + g('Vía de administración', it.via)
+        + g('Cantidad', it.cantidad)
+        + g('Ritmo horario', it.ritmo)
+      + '</div>'
+      + '<div class="rp-band">'
+        + '<div><div class="k">Período de resguardo · Leche</div><div class="val">'+esc(it.resg_leche||'—')+'</div></div>'
+        + '<div><div class="k">Período de resguardo · Carne</div><div class="val">'+esc(it.resg_carne||'—')+'</div></div>'
+      + '</div>'
+      + (it.obs ? '<div class="obs"><b>OBS · </b>'+esc(it.obs)+'</div>' : '')
+      + '</div>';
+  }
+  const cuerpo = r.items.map(cardHTML).join('');
+  const nota = (r.nota||'').trim();
+
+  return '<div class="receta-print">'
+    + cab
+    + '<div class="rp-head">'
+      + '<div class="rx"><span class="sym">℞</span><h2>Receta</h2></div>'
+      + '<div class="info"><b>Folio '+folioTexto(folio)+'</b>'+(sinGuardar?' (sin guardar)':'')
+        + '<br>'+esc((v.ciudad?v.ciudad+', ':'')+fechaLarga(r.fecha))+'</div>'
+    + '</div>'
+    + '<div class="rp-prop"><div class="rp-lab">Propietario</div>'
+      + '<div class="nom">'+esc(cliente.nombre)+'</div>'
+      + '<div class="sub">'+[cliente.rup?'RUP '+esc(cliente.rup):'', esc(cliente.direccion||'')].filter(Boolean).join('  ·  ')+'</div>'
+    + '</div>'
+    + '<div class="rp-nota'+(nota?'':' vacia')+'">'+esc(nota)+'</div>'
+    + '<div class="rp-lab">Prescripción</div>'
+    + cuerpo
+    + '<div class="rp-firma">'
+      + (firmaSrc ? '<img class="rubrica" src="'+esc(firmaSrc)+'" alt="Firma" onerror="this.style.display=\'none\'">' : '')
+      + '<div class="linea"></div>'
+      + '<b>'+esc(v.nombre||'')+'</b>'
+      + '<small>'+esc(v.firma||v.rol||'Médico Veterinario')+(v.rut?' · RUT '+esc(v.rut):'')+'</small>'
+      + '</div>'
+    + '</div>';
+}
+
+function previsualizar(){
+  if(!validarReceta()) return;
+  const cliente = DB.clientes.find(c=>c.id===receta.clienteId);
+  const html = recetaHTML(receta, cliente);
+  abrirDlg('<h2>Vista previa</h2>'
+    + '<div style="border:1px solid var(--linea);border-radius:10px;padding:12px;max-height:52vh;overflow:auto">'+html+'</div>'
+    + '<div class="acciones"><button class="btn" onclick="imprimir()">Imprimir / Guardar PDF</button>'
+    + '<button class="btn gris" onclick="cerrarDlg()">Cerrar</button></div>');
+}
+function imprimirHTML(html){
+  const cont = document.getElementById('impresion');
+  cont.innerHTML = html;
+  cerrarDlg();
+  const imgs = [].slice.call(cont.querySelectorAll('img'));
+  const listo = Promise.all(imgs.map(function(im){
+    if(im.complete && im.naturalWidth) return Promise.resolve();
+    return new Promise(function(res){ im.onload = im.onerror = res; });
+  }));
+  let hecho = false;
+  const disparar = function(){ if(hecho) return; hecho = true; setTimeout(function(){ window.print(); }, 80); };
+  listo.then(disparar);
+  setTimeout(disparar, 1500); // respaldo por si alguna imagen nunca resuelve
+}
+function imprimir(){
+  const cliente = DB.clientes.find(c=>c.id===receta.clienteId);
+  imprimirHTML(recetaHTML(receta, cliente));
+}
+
+function guardarReceta(){
+  if(!validarReceta()) return;
+  const cliente = DB.clientes.find(c=>c.id===receta.clienteId);
+  DB.folio = (DB.folio || 0) + 1;
+  DB.recetas.unshift({
+    id:nuevoId(), creada:new Date().toISOString(), folio:DB.folio,
+    tipo:receta.tipo, fecha:receta.fecha, nota:receta.nota||'',
+    clienteId:receta.clienteId, clienteNombre:cliente.nombre,
+    cliente:{nombre:cliente.nombre,rup:cliente.rup,direccion:cliente.direccion},
+    items:JSON.parse(JSON.stringify(receta.items))
+  });
+  guardar();
+  toast('avisoReceta','Receta guardada · Folio '+folioTexto(DB.folio)+'.','ok');
+}
+
+/* =================== CLIENTES =================== */
+function renderClientes(){
+  const f = (document.getElementById('filtroCliente').value||'').toLowerCase();
+  const ul = document.getElementById('listaClientes');
+  const arr = DB.clientes.slice().sort((a,b)=>a.nombre.localeCompare(b.nombre))
+    .filter(c=>c.nombre.toLowerCase().includes(f) || (c.rup||'').toLowerCase().includes(f));
+  ul.innerHTML = arr.length ? arr.map(c=>'<li><div class="txt"><b>'+esc(c.nombre)+'</b>'
+    + '<small>RUP '+esc(c.rup||'—')+' · '+esc(c.direccion||'—')+'</small></div>'
+    + '<button class="btn sec chico" onclick="editarCliente(\''+c.id+'\')">Editar</button></li>').join('')
+    : '<div class="vacio">Sin clientes.</div>';
+}
+document.getElementById('filtroCliente').addEventListener('input', renderClientes);
+
+function editarCliente(id, onCreado){
+  const c = id ? DB.clientes.find(x=>x.id===id) : {nombre:'',rup:'',direccion:''};
+  abrirDlg('<h2>'+(id?'Editar':'Nuevo')+' cliente</h2>'
+    + '<label>Nombre / Razón social</label><input id="cNombre" value="'+esc(c.nombre)+'">'
+    + '<label>RUP</label><input id="cRup" value="'+esc(c.rup)+'">'
+    + '<label>Dirección</label><input id="cDir" value="'+esc(c.direccion)+'">'
+    + '<div class="acciones"><button class="btn" onclick="guardarCliente(\''+(id||'')+'\')">Guardar</button>'
+    + (id?'<button class="btn peligro" onclick="borrarCliente(\''+id+'\')">Eliminar</button>':'')
+    + '<button class="btn gris" onclick="cerrarDlg()">Cancelar</button></div>');
+  document.getElementById('dlg')._onCreado = onCreado;
+}
+function guardarCliente(id){
+  const nombre = document.getElementById('cNombre').value.trim();
+  if(!nombre){ alert('El nombre es obligatorio.'); return; }
+  const datos = {nombre, rup:document.getElementById('cRup').value.trim(), direccion:document.getElementById('cDir').value.trim()};
+  if(id){ Object.assign(DB.clientes.find(x=>x.id===id), datos); }
+  else {
+    const nuevo = Object.assign({id:nuevoId()}, datos);
+    DB.clientes.push(nuevo);
+    const cb = document.getElementById('dlg')._onCreado; if(cb) cb(nuevo.id);
+  }
+  guardar(); cerrarDlg(); renderClientes(); renderSelectCliente();
+}
+function borrarCliente(id){
+  if(!confirm('¿Eliminar este cliente?')) return;
+  DB.clientes = DB.clientes.filter(x=>x.id!==id);
+  if(receta.clienteId===id) receta.clienteId=null;
+  guardar(); cerrarDlg(); renderClientes(); renderSelectCliente();
+}
+
+/* =================== MEDICAMENTOS =================== */
+function renderMedicamentos(){
+  const f = (document.getElementById('filtroMed').value||'').toLowerCase();
+  const ul = document.getElementById('listaMedicamentos');
+  document.getElementById('contMed').textContent = DB.medicamentos.length;
+  const arr = DB.medicamentos.slice().sort((a,b)=>a.nombre.localeCompare(b.nombre))
+    .filter(m=>m.nombre.toLowerCase().includes(f));
+  ul.innerHTML = arr.length ? arr.map(m=>'<li><div class="txt"><b>'+esc(m.nombre)+'</b>'
+    + (m.indicacion?' <span class="pill">'+esc(m.indicacion)+'</span>':'')
+    + '<small>'+esc([m.presentacion,m.dosis,m.frecuencia].filter(Boolean).join(' · '))+'<br>'
+    + 'Resg. leche: '+esc(m.resg_leche||'—')+' · carne: '+esc(m.resg_carne||'—')+(m.nota?(' · '+esc(m.nota)):'')+'</small></div>'
+    + '<button class="btn sec chico" onclick="editarMedicamento(\''+m.id+'\')">Editar</button></li>').join('')
+    : '<div class="vacio">Sin resultados.</div>';
+}
+document.getElementById('filtroMed').addEventListener('input', renderMedicamentos);
+
+function editarMedicamento(id){
+  const m = id ? DB.medicamentos.find(x=>x.id===id) : {nombre:'',presentacion:'',dosis:'',frecuencia:'',resg_leche:'',resg_carne:'',nota:'',indicacion:''};
+  const cc=(et,key)=>'<label>'+et+'</label><input id="m_'+key+'" value="'+esc(m[key]||'')+'">';
+  abrirDlg('<h2>'+(id?'Editar':'Nuevo')+' medicamento</h2>'
+    + cc('Nombre comercial','nombre') + cc('Presentación','presentacion')
+    + cc('Indicación habitual','indicacion')
+    + cc('Dosis','dosis') + cc('Frecuencia','frecuencia')
+    + '<div class="fila"><div>'+cc('Resg. leche','resg_leche')+'</div><div>'+cc('Resg. carne','resg_carne')+'</div></div>'
+    + cc('Nota / principio activo','nota')
+    + '<div class="acciones"><button class="btn" onclick="guardarMedicamento(\''+(id||'')+'\')">Guardar</button>'
+    + (id?'<button class="btn peligro" onclick="borrarMedicamento(\''+id+'\')">Eliminar</button>':'')
+    + '<button class="btn gris" onclick="cerrarDlg()">Cancelar</button></div>');
+}
+function guardarMedicamento(id){
+  const g=key=>document.getElementById('m_'+key).value.trim();
+  const nombre=g('nombre');
+  if(!nombre){ alert('El nombre es obligatorio.'); return; }
+  const datos={nombre,presentacion:g('presentacion'),indicacion:g('indicacion'),dosis:g('dosis'),frecuencia:g('frecuencia'),resg_leche:g('resg_leche'),resg_carne:g('resg_carne'),nota:g('nota')};
+  if(id){ Object.assign(DB.medicamentos.find(x=>x.id===id), datos); }
+  else { DB.medicamentos.push(Object.assign({id:nuevoId()}, datos)); }
+  guardar(); cerrarDlg(); renderMedicamentos();
+}
+function borrarMedicamento(id){
+  if(!confirm('¿Eliminar este medicamento de tu base?')) return;
+  DB.medicamentos = DB.medicamentos.filter(x=>x.id!==id);
+  guardar(); cerrarDlg(); renderMedicamentos();
+}
+function restaurarBase(){
+  if(!confirm('Vuelve a agregar los '+BASE_MEDICAMENTOS.length+' medicamentos originales del Excel. Tus medicamentos añadidos y ediciones se mantienen (se pueden duplicar nombres). ¿Continuar?')) return;
+  const existentes = new Set(DB.medicamentos.map(m=>m.nombre.toLowerCase()));
+  let n=0;
+  BASE_MEDICAMENTOS.forEach(function(m){
+    if(!existentes.has(m.nombre.toLowerCase())){ DB.medicamentos.push(Object.assign({id:nuevoId()}, m)); n++; }
+  });
+  guardar(); renderMedicamentos();
+  alert(n+' medicamentos restaurados.');
+}
+
+/* =================== HISTORIAL =================== */
+function renderHistorial(){
+  const f = (document.getElementById('filtroHist').value||'').toLowerCase();
+  const ul = document.getElementById('listaHistorial');
+  const arr = DB.recetas.filter(r=>{
+    const s = (r.clienteNombre+' '+r.items.map(i=>i.producto).join(' ')).toLowerCase();
+    return s.includes(f);
+  });
+  ul.innerHTML = arr.length ? arr.map(r=>{
+    const prods = r.items.map(i=>i.producto).filter(Boolean).join(', ');
+    return '<li><div class="txt"><b>'+esc(r.clienteNombre)+'</b>'
+      + '<small>'+esc(fechaLarga(r.fecha))+' · '+esc(r.tipo)+'<br>'+esc(prods)+'</small></div>'
+      + '<div style="display:flex;flex-direction:column;gap:6px">'
+      + '<button class="btn sec chico" onclick="reimprimir(\''+r.id+'\')">PDF</button>'
+      + '<button class="btn gris chico" onclick="duplicarReceta(\''+r.id+'\')">Reusar</button>'
+      + '<button class="btn peligro chico" onclick="borrarReceta(\''+r.id+'\')">✕</button>'
+      + '</div></li>';
+  }).join('') : '<div class="vacio">Sin recetas guardadas.</div>';
+}
+document.getElementById('filtroHist').addEventListener('input', renderHistorial);
+function reimprimir(id){
+  const r = DB.recetas.find(x=>x.id===id); if(!r) return;
+  imprimirHTML(recetaHTML(r, r.cliente));
+}
+function duplicarReceta(id){
+  const r = DB.recetas.find(x=>x.id===id); if(!r) return;
+  receta = { tipo:r.tipo, clienteId:(DB.clientes.some(c=>c.id===r.clienteId)?r.clienteId:(DB.clientes[0]||{}).id), fecha:hoyISO(), nota:r.nota||'', items:JSON.parse(JSON.stringify(r.items)) };
+  document.querySelector('nav button[data-tab="tab-receta"]').click();
+  document.querySelectorAll('#toggleTipo button').forEach(x=>x.classList.toggle('on', x.dataset.tipo===receta.tipo));
+  document.getElementById('fechaReceta').value = receta.fecha;
+  document.getElementById('notaReceta').value = receta.nota;
+  renderSelectCliente(); renderItems();
+  toast('avisoReceta','Receta copiada. Ajusta y vuelve a generar.','ok');
+}
+function borrarReceta(id){
+  if(!confirm('¿Eliminar esta receta del historial?')) return;
+  DB.recetas = DB.recetas.filter(x=>x.id!==id);
+  guardar(); renderHistorial();
+}
+
+/* =================== AJUSTES =================== */
+function renderLogoPrev(){
+  const src = DB.vet.logo || LOGO_IMG;
+  document.getElementById('vetLogoPrev').innerHTML = src
+    ? '<img src="'+esc(src)+'" style="max-width:100%;max-height:100%;object-fit:contain">'
+    : '<span style="font-size:11px;color:var(--muted)">sin logo</span>';
+}
+function renderFirmaPrev(){
+  const src = DB.vet.firmaImg==='off' ? '' : (DB.vet.firmaImg || FIRMA_IMG);
+  document.getElementById('vetFirmaPrev').innerHTML = src
+    ? '<img src="'+esc(src)+'" style="max-width:100%;max-height:100%;object-fit:contain">'
+    : '<span style="font-size:11px;color:var(--muted)">sin firma</span>';
+}
+function cargarVet(){
+  const g = (id,key)=>{ document.getElementById(id).value = DB.vet[key]||''; };
+  g('vetNombre','nombre'); g('vetRol','rol'); g('vetRut','rut'); g('vetColegio','colegio');
+  g('vetSag','sag'); g('vetDireccion','direccion'); g('vetCiudad','ciudad');
+  g('vetTelefono','telefono'); g('vetEmail','email'); g('vetFirma','firma');
+  renderLogoPrev(); renderFirmaPrev();
+}
+function guardarVet(){
+  const g = id => document.getElementById(id).value.trim();
+  Object.assign(DB.vet, {
+    nombre:g('vetNombre'), rol:g('vetRol')||'Médico Veterinario', rut:g('vetRut'), colegio:g('vetColegio'),
+    sag:g('vetSag'), direccion:g('vetDireccion'), ciudad:g('vetCiudad'),
+    telefono:g('vetTelefono'), email:g('vetEmail'), firma:g('vetFirma')
+  });
+  guardar();
+  toast('avisoVet','Encabezado guardado.','ok');
+}
+function subirLogo(input){
+  const file = input.files[0]; if(!file) return;
+  const rd = new FileReader();
+  rd.onload = function(){
+    const img = new Image();
+    img.onload = function(){
+      const max = 320, esc2 = Math.min(1, max/Math.max(img.width,img.height));
+      const cv = document.createElement('canvas');
+      cv.width = Math.round(img.width*esc2); cv.height = Math.round(img.height*esc2);
+      cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
+      DB.vet.logo = cv.toDataURL('image/png');
+      guardar(); renderLogoPrev();
+      toast('avisoVet','Logo actualizado.','ok');
+    };
+    img.onerror = function(){ toast('avisoVet','No se pudo leer la imagen.','aviso'); };
+    img.src = rd.result;
+  };
+  rd.readAsDataURL(file);
+  input.value = '';
+}
+function quitarLogo(){
+  DB.vet.logo = '';
+  guardar(); renderLogoPrev();
+  toast('avisoVet','Se usará el logo por defecto.','ok');
+}
+function subirFirma(input){
+  const file = input.files[0]; if(!file) return;
+  const rd = new FileReader();
+  rd.onload = function(){
+    const img = new Image();
+    img.onload = function(){
+      const max = 700, k = Math.min(1, max/Math.max(img.width,img.height));
+      const cv = document.createElement('canvas');
+      cv.width = Math.round(img.width*k); cv.height = Math.round(img.height*k);
+      cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
+      DB.vet.firmaImg = cv.toDataURL('image/png');
+      guardar(); renderFirmaPrev();
+      toast('avisoVet','Firma actualizada.','ok');
+    };
+    img.onerror = function(){ toast('avisoVet','No se pudo leer la imagen.','aviso'); };
+    img.src = rd.result;
+  };
+  rd.readAsDataURL(file);
+  input.value = '';
+}
+function quitarFirma(){
+  DB.vet.firmaImg = 'off';
+  guardar(); renderFirmaPrev();
+  toast('avisoVet','Se usará solo la línea de firma (sin imagen).','ok');
+}
+function exportarDatos(){
+  const blob = new Blob([JSON.stringify(DB,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'recetario-respaldo-'+hoyISO()+'.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+}
+function importarDatos(input){
+  const file = input.files[0]; if(!file) return;
+  const rd = new FileReader();
+  rd.onload = function(){
+    try{
+      const data = JSON.parse(rd.result);
+      if(!data || !Array.isArray(data.clientes) || !Array.isArray(data.medicamentos)) throw new Error('Formato no reconocido');
+      if(!confirm('Esto reemplaza TODOS los datos actuales por los del respaldo. ¿Continuar?')) return;
+      DB = data;
+      DB.vet = Object.assign({}, VET_DEFECTO, DB.vet || {});
+      if(!Array.isArray(DB.recetas)) DB.recetas = [];
+      if(typeof DB.folio !== 'number') DB.folio = DB.recetas.reduce((m,r)=>Math.max(m,r.folio||0),0);
+      guardar();
+      cargarVet(); renderSelectCliente(); renderItems();
+      toast('avisoAjustes','Respaldo importado: '+DB.clientes.length+' clientes, '+DB.medicamentos.length+' medicamentos, '+DB.recetas.length+' recetas.','ok');
+    }catch(e){ toast('avisoAjustes','No se pudo importar: '+e.message,'aviso'); }
+    input.value='';
+  };
+  rd.readAsText(file);
+}
+
+/* =================== ARRANQUE =================== */
+cargar();
+(function(){ const t = logoTag(DB.vet.logo); const el = document.getElementById('appLogo'); el.innerHTML = t; el.hidden = !t; })();
+document.getElementById('fechaReceta').value = receta.fecha;
+document.getElementById('baseCount').textContent = BASE_MEDICAMENTOS.length;
+renderSelectCliente();
+renderItems();
+cargarVet();
+/* ---- Service worker: funcionamiento offline ---- */
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  });
+}
+</script>
+</body>
+</html>
